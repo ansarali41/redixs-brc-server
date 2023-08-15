@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
+import { SatsBTC } from './base/entity/stasbtc';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SatsBTCService {
+  constructor(
+    @InjectRepository(SatsBTC)
+    private satsBTCRepository: Repository<SatsBTC>,
+  ) {}
   async getAllTokenData() {
     const totalPages = 20;
     const tokenLists = [];
@@ -30,5 +37,18 @@ export class SatsBTCService {
     }
 
     return tokenLists;
+  }
+
+  async getAllTokenFromDatabase(limit: number, offset: number) {
+    try {
+      const [results, total] = await this.satsBTCRepository.findAndCount({
+        skip: offset,
+        take: limit,
+      });
+
+      return { total, limit, data: results };
+    } catch (error) {
+      throw error;
+    }
   }
 }
