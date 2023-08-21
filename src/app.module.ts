@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SatsBTC } from './satsBTC/base/entity/stasbtc';
 import { ConfigModule } from '@nestjs/config';
 import { SatsBTCModule } from './satsBTC/satsbtc.module';
+import { TokenPrice } from './satsBTC/base/entity/token-price';
+import { TokenDetails } from './satsBTC/base/entity/token-details';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { SatsBTCModule } from './satsBTC/satsbtc.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [SatsBTC],
+      entities: [SatsBTC, TokenDetails, TokenPrice],
       synchronize: true,
     }),
     SatsBTCModule,
