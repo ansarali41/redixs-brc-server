@@ -7,9 +7,11 @@ import { TokenPrice } from './base/entity/token-price';
 import { CornService } from './corn.service';
 import { SatsBTCController } from './satsbtc.controller';
 import { SatsBTCService } from './satsbtc.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     TypeOrmModule.forFeature([SatsBTC, TokenDetails, TokenPrice]),
   ],
